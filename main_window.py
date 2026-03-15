@@ -16,18 +16,13 @@ class MainWindow(QWidget):
 
         self.initVariables()
 
-        # self.setupDimensions()
-        # self.setupPositions()
-        # self.setupLabels()
-        # self.setupButtons()
-        # self.setupWindow()
         self.setupUi()
         
         self.setupTimer()
            
 
     def initVariables(self):
-        self.arduino_port = ""
+        self.port = ""
         self.baud = 0
 
         self.setWindowTitle("App")
@@ -119,7 +114,6 @@ class MainWindow(QWidget):
 
         outer_layout.addLayout(receiver_buttons_layout, 2)
 
-        # spacing between sections
         outer_layout.addSpacing(5)
 
         line = QFrame()
@@ -329,10 +323,10 @@ class MainWindow(QWidget):
     def onSendButtonClick(self):
         self.packet = buildPacketFromInputs(self.collectTransmitterInputs())
 
-        # Giden alanlarını güncelle
+        # Update the outgoing fields
         self.updateTransmitterAndReceiverFromData(self.packet, "t")
 
-        # İstersen receiver tarafını da aynı veriyle test amaçlı güncelle
+        # Update the incoming fields
         self.updateTransmitterAndReceiverFromData(self.packet, "r")
                     
 
@@ -355,8 +349,8 @@ class MainWindow(QWidget):
 
 
     def openPort(self, r_or_t):
-        if self.arduino_port == "":
-            QMessageBox.critical(self, "Error", "Arduino Port is not Set!") 
+        if self.port == "":
+            QMessageBox.critical(self, "Error", "Port is not Set!") 
             return 
         
         if self.baud == 0: 
@@ -384,7 +378,7 @@ class MainWindow(QWidget):
                     return 
         
         self.open_thread = QThread() 
-        self.open_worker = SerialOpenWorker(self.arduino_port, self.baud, r_or_t) 
+        self.open_worker = SerialOpenWorker(self.port, self.baud, r_or_t) 
         self.open_worker.moveToThread(self.open_thread)
         self.open_thread.started.connect(self.open_worker.run)
         self.open_worker.success.connect(self.onPortOpened)
@@ -411,7 +405,7 @@ class MainWindow(QWidget):
         if not self.timer.isActive(): 
             self.timer.start(500)
         
-        QMessageBox.information( self, "Success", f"Port {self.arduino_port} opened at {self.baud} baud." )
+        QMessageBox.information( self, "Success", f"Port {self.port} opened at {self.baud} baud." )
         
     
     def onPortOpenError(self, error_msg): 

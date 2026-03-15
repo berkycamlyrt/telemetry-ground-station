@@ -19,7 +19,7 @@ def buildPacketFromInputs(fields):
         new_packet[4] = fields["team_id"]   # team id
         new_packet[5] = fields["counter"]   # counter
 
-        new_packet[6:10] = struct.pack('f', fields["altitude"])    # altitude
+        new_packet[6:10]  = struct.pack('f', fields["altitude"])    # altitude
         new_packet[10:14] = struct.pack('f', fields["rocket_gps_altitude"])   # rocket gps altitude
         new_packet[14:18] = struct.pack('f', fields["rocket_latitude"])   # rocket latitude
         new_packet[18:22] = struct.pack('f', fields["rocket_longitude"])   # rocket longitude 
@@ -30,9 +30,9 @@ def buildPacketFromInputs(fields):
         new_packet[46:50] = struct.pack('f', fields["gyro_x"])   # gyro x
         new_packet[50:54] = struct.pack('f', fields["gyro_y"])   # gyro y
         new_packet[54:58] = struct.pack('f', fields["gyro_z"])   # gyrp z
-        new_packet[58:62] = struct.pack('f', fields["acceleration_x"])   # acc x
-        new_packet[62:66] = struct.pack('f', fields["acceleration_y"])   # acc y
-        new_packet[66:70] = struct.pack('f', fields["acceleration_z"])   # acc z
+        new_packet[58:62] = struct.pack('f', fields["acceleration_x"])   # acceleration x
+        new_packet[62:66] = struct.pack('f', fields["acceleration_y"])   # acceleration y
+        new_packet[66:70] = struct.pack('f', fields["acceleration_z"])   # acceleration z
         new_packet[70:74] = struct.pack('f', fields["angle"])   # angle
 
         new_packet[74] = fields["state"] # state

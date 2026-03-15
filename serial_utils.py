@@ -3,7 +3,7 @@ from PyQt5.QtCore import pyqtSignal, QObject
 
 
 class SerialOpenWorker(QObject):
-    success = pyqtSignal(object, str) # ser objesi, mode 
+    success = pyqtSignal(object, str)
     error = pyqtSignal(str) 
     finished = pyqtSignal()
     
